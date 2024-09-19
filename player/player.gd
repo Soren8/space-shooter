@@ -1,3 +1,5 @@
+# player.gd
+
 extends Area2D
 
 # Constants
@@ -24,7 +26,7 @@ func _ready():
 	invincible_timer = INVINCIBILITY_TIME
 	add_to_group("Player")
 
-func _process(delta):
+func _physics_process(delta):
 	handle_input(delta)
 	move_and_wrap(delta)
 	handle_invincibility(delta)
@@ -88,11 +90,8 @@ func respawn():
 	invincible_timer = INVINCIBILITY_TIME
 	$CollisionPolygon2D.disabled = true
 
-# Collision Handling
+# ---- Collision Handling ----
 func _on_body_entered(body: Node):
 	if body.is_in_group("Asteroid") and not invincible:
-		lives -= 1
-		if lives <= 0:
-			get_parent().game_over()
-		else:
-			respawn()
+		emit_signal("player_hit")  # Emit a signal to main.gd
+		# Note: main.gd will handle the lives decrement and respawn

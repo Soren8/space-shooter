@@ -1,6 +1,5 @@
-[gd_scene load_steps=3 format=3 uid="uid://56iw261d2400"]
+[gd_scene load_steps=2 format=3 uid="uid://56iw261d2400"]
 
-[ext_resource type="PackedScene" uid="uid://cvnsjnj5qfqqd" path="res://player/player.tscn" id="1_22afg"]
 [ext_resource type="Script" path="res://main.gd" id="1_56k8w"]
 
 [node name="Main" type="Node2D"]
@@ -29,6 +28,3 @@ offset_left = 10.0
 offset_top = 50.0
 offset_right = 50.0
 offset_bottom = 73.0
-
-[node name="Player" parent="." instance=ExtResource("1_22afg")]
-position = Vector2(-1, 7)

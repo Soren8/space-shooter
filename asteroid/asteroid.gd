@@ -2,6 +2,10 @@
 
 extends Area2D
 
+# ---- Signals ----
+signal asteroid_destroyed(size)
+signal player_hit()
+
 # Constants for size ranges
 const MIN_SIZE = 0.2
 const MAX_SIZE = 1.0
@@ -19,11 +23,12 @@ var velocity = Vector2.ZERO  # Movement vector
 
 func _ready():
 	set_process(true)
+	add_to_group("Asteroid")
 	initialize_velocity()
 
 # ---- Set Size Function ----
 func set_size(new_size: float):
-	size = new_size
+	size = clamp(new_size, MIN_SIZE, MAX_SIZE)
 	var sprite = $Sprite2D
 	var collision_shape = $CollisionShape2D
 
@@ -35,9 +40,9 @@ func set_size(new_size: float):
 		var shape = collision_shape.shape
 		if shape:
 			if shape is RectangleShape2D:
-				shape.extents = Vector2(size * 32, size * 32)  # Assuming base size 32x32
+				shape.extents = Vector2(size * 16, size * 16)  # Adjust based on base size
 			elif shape is CircleShape2D:
-				shape.radius = size * 16  # Assuming base radius 16
+				shape.radius = size * 8  # Adjust based on base radius
 			collision_shape.shape = shape
 		else:
 			push_error("CollisionShape2D has no shape assigned.")
@@ -49,7 +54,6 @@ func set_size(new_size: float):
 		print("Asteroid size set to:", size, "Speed set to:", speed)
 	else:
 		push_error("Sprite2D or CollisionShape2D node not found in Asteroid scene.")
-
 
 # ---- Initialize Velocity Function ----
 func initialize_velocity():
@@ -77,12 +81,16 @@ func move_and_wrap(delta):
 # ---- Collision Handling ----
 func _on_body_entered(body):
 	if body.is_in_group("Bullet"):
+		print("Asteroid collided with Bullet:", body)
+		emit_signal("asteroid_destroyed", size)
+		body.queue_free()
 		destroy_asteroid()
 	elif body.is_in_group("Player"):
-		# Handle collision with player
+		print("Asteroid collided with Player:", body)
+		emit_signal("player_hit")
 		destroy_asteroid()
 
 # ---- Destroy Asteroid Function ----
 func destroy_asteroid():
-	# Implement destruction logic (e.g., splitting, scoring)
+	# Implement destruction logic (e.g., splitting into smaller asteroids)
 	queue_free()

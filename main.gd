@@ -29,7 +29,7 @@ func _ready():
     add_child(player_instance)
     player_instance.position = get_viewport().size / 2
     player_instance.connect("shoot_bullet", Callable(self, "_on_Player_shoot_bullet"))
-    player_instance.connect("body_entered", Callable(self, "_on_Player_body_entered"))
+    # Removed: player_instance.connect("body_entered", Callable(self, "_on_Player_body_entered"))
     
     # Spawn Initial Asteroids
     spawn_asteroids(5)
@@ -41,8 +41,7 @@ func _on_Player_shoot_bullet(position: Vector2, rotation: float):
     bullets_node.add_child(bullet)
     bullet.position = position
     bullet.rotation = rotation
-    bullet.velocity = Vector2.UP.rotated(rotation) * BulletScene.instance().SPEED  # Access SPEED from Bullet
-    # No need to connect signals here as collisions are handled within Bullet and Player scripts
+    # No need to connect signals here as collisions are handled within Bullet and Asteroid scripts
     print("Bullet instantiated at position:", bullet.position, "with velocity:", bullet.velocity)  # Debug statement
 
 # ---- Spawn Asteroids Function ----
@@ -71,41 +70,51 @@ func spawn_asteroids(num: int):
         # Set asteroid size randomly between 0.2 and 1.0
         var asteroid_size = randf_range(0.2, 1.0)
         asteroid.set_size(asteroid_size)
+        
+        # Connect asteroid to its signals
+        asteroid.connect("asteroid_destroyed", Callable(self, "_on_Asteroid_destroyed"))
+        asteroid.connect("player_hit", Callable(self, "_on_Player_hit"))
 
 # ---- Process Function ----
-func _process(delta: float):
+func _physics_process(delta: float):
     # Update HUD
     hud_node.get_node("ScoreLabel").text = "Score: %d" % score
     hud_node.get_node("LivesLabel").text = "Lives: %d" % lives
     hud_node.get_node("LevelLabel").text = "Level: %d" % level
 
-# ---- Asteroid Hit Handling ----
-func asteroid_hit(asteroid: Node):
-    # Ensure asteroid has a 'size' property
-    if asteroid.has("size"):
-        score += 10 * asteroid.size
-        var new_size = asteroid.size - 1
-        if new_size > 0:
-            # Split into two smaller asteroids
-            for i in range(2):
-                var new_asteroid = AsteroidScene.instantiate()
-                asteroids_node.add_child(new_asteroid)
-                new_asteroid.position = asteroid.position
-                new_asteroid.set_size(new_size)
-                var angle = randf() * PI * 2
-                new_asteroid.velocity = Vector2(cos(angle), sin(angle)) * new_asteroid.speed
-    else:
-        push_error("Asteroid does not have a 'size' property.")
-    
-    asteroid.queue_free()
-    check_level_complete()
+# ---- Asteroid Destroyed Signal Handler ----
+func _on_Asteroid_destroyed(size: float):
+    score += 10 * size
+    print("Score updated to:", score)  # Debug statement
+    var new_size = size - 1
+    if new_size > 0:
+        spawn_smaller_asteroids(new_size)
 
-# ---- Check Level Completion ----
-func check_level_complete():
-    if asteroids_node.get_child_count() == 0:
-        level += 1
-        print("Level up! New level:", level)  # Debug statement
-        spawn_asteroids(3 + level)
+# ---- Player Hit Signal Handler ----
+func _on_Player_hit():
+    lives -= 1
+    print("Player hit! Lives remaining:", lives)  # Debug statement
+    if lives <= 0:
+        game_over()
+    else:
+        player_instance.respawn()
+
+# ---- Spawn Smaller Asteroids Function ----
+func spawn_smaller_asteroids(new_size: float):
+    var screen_size = get_viewport().size
+    for i in range(2):  # Spawn two smaller asteroids
+        var asteroid = AsteroidScene.instantiate()
+        asteroids_node.add_child(asteroid)
+        asteroid.position = player_instance.position  # Or choose appropriate position
+        asteroid.set_size(new_size)
+        
+        # Assign random movement direction
+        var angle = randf() * PI * 2
+        asteroid.velocity = Vector2(cos(angle), sin(angle)) * asteroid.speed
+        
+        # Connect asteroid to its signals
+        asteroid.connect("asteroid_destroyed", Callable(self, "_on_Asteroid_destroyed"))
+        asteroid.connect("player_hit", Callable(self, "_on_Player_hit"))
 
 # ---- Game Over Handling ----
 func game_over():

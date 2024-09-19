@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dio7uf4flqx78"]
+
+[ext_resource type="Script" path="res://starry_background.gd" id="1_uw0ee"]
+
+[node name="StarryBackground" type="CanvasLayer"]
+script = ExtResource("1_uw0ee")

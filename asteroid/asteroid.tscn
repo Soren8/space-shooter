@@ -10,12 +10,12 @@ radius = 5.85122
 collision_layer = 2
 script = ExtResource("1_32vll")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(3, -2)
-scale = Vector2(6.62199, 5.1812)
-shape = SubResource("CircleShape2D_epspn")
-
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 0.649935
 scale = Vector2(0.229999, 0.229999)
 texture = ExtResource("1_r14hl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3, -2)
+scale = Vector2(6.62199, 5.1812)
+shape = SubResource("CircleShape2D_epspn")

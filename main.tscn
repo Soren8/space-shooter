@@ -6,6 +6,10 @@
 [node name="Main" type="Node2D"]
 script = ExtResource("1_56k8w")
 
+[node name="Bullets" type="Node2D" parent="."]
+
+[node name="Asteroids" type="Node2D" parent="."]
+
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="ScoreLabel" type="Label" parent="HUD"]
@@ -28,7 +32,3 @@ offset_bottom = 73.0
 
 [node name="Player" parent="." instance=ExtResource("1_22afg")]
 position = Vector2(-1, 7)
-
-[node name="Asteroids" type="Node2D" parent="."]
-
-[node name="Bullets" type="Node2D" parent="."]

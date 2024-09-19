@@ -24,6 +24,7 @@ var velocity = Vector2.ZERO  # Movement vector
 func _ready():
 	set_process(true)
 	add_to_group("Asteroid")
+	connect("area_entered", Callable(self, "_on_body_entered"))
 	initialize_velocity()
 
 # ---- Set Size Function ----

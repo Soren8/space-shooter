@@ -30,31 +30,14 @@ func _ready():
 # ---- Set Size Function ----
 func set_size(new_size: float):
 	size = clamp(new_size, MIN_SIZE, MAX_SIZE)
-	var sprite = $Sprite2D
-	var collision_shape = $CollisionShape2D
-
-	if sprite and collision_shape:
-		# Resize the sprite
-		sprite.scale = Vector2(size, size)
-		
-		# Resize the collision shape
-		var shape = collision_shape.shape
-		if shape:
-			if shape is RectangleShape2D:
-				shape.extents = Vector2(size * 16, size * 16)  # Adjust based on base size
-			elif shape is CircleShape2D:
-				shape.radius = size * 8  # Adjust based on base radius
-			collision_shape.shape = shape
-		else:
-			push_error("CollisionShape2D has no shape assigned.")
-		
-		# Adjust speed inversely based on size
-		speed = BASE_SPEED / size
-		velocity = velocity.normalized() * speed
-		
-		print("Asteroid size set to:", size, "Speed set to:", speed)
-	else:
-		push_error("Sprite2D or CollisionShape2D node not found in Asteroid scene.")
+	# Scale the asteroid node (self), which scales both the Sprite2D and CollisionShape2D
+	self.scale = Vector2(size, size)
+	
+	# Adjust speed inversely based on size
+	speed = BASE_SPEED / size
+	velocity = velocity.normalized() * speed
+	
+	print("Asteroid size set to:", size, "Speed set to:", speed)
 
 # ---- Initialize Velocity Function ----
 func initialize_velocity():

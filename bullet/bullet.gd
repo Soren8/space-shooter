@@ -1,8 +1,8 @@
 extends Area2D
 
 # Constants
-const SPEED = 500
-const LIFETIME = 1.0  # seconds
+const SPEED = 1000
+const LIFETIME = 2.0  # seconds
 
 # Variables
 var velocity = Vector2.ZERO

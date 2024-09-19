@@ -100,9 +100,9 @@ func spawn_smaller_asteroids(new_size: float, parent_position: Vector2):
     var screen_size = get_viewport().size
     for i in range(2):  # Spawn two smaller asteroids
         var asteroid = AsteroidScene.instantiate()
-        asteroids_node.add_child(asteroid)
+        asteroids_node.call_deferred("add_child", asteroid)
         asteroid.position = parent_position  # Set to parent asteroid's position
-        asteroid.set_size(new_size)
+        asteroid.call_deferred("set_size", new_size)  # Deferred set_size call
         
         # Assign random movement direction
         var angle = randf() * PI * 2

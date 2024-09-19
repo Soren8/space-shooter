@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://player/player.gd" id="1_lyuys"]
 
 [node name="Player" type="Area2D"]
-collision_mask = 2
+collision_layer = 4
 script = ExtResource("1_lyuys")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

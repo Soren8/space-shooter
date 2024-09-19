@@ -68,10 +68,6 @@ func spawn_asteroids(num: int):
         var angle = randf() * PI * 2
         asteroid.velocity = Vector2(cos(angle), sin(angle)) * asteroid.speed
         
-        # Set asteroid size randomly between 0.2 and 1.0
-        var asteroid_size = randf_range(0.2, 1.0)
-        asteroid.set_size(asteroid_size)
-        
         # Connect asteroid to its signals
         asteroid.connect("asteroid_destroyed", Callable(self, "_on_Asteroid_destroyed"))
         asteroid.connect("player_hit", Callable(self, "_on_Player_hit"))
@@ -84,12 +80,11 @@ func _physics_process(delta: float):
     hud_node.get_node("LevelLabel").text = "Level: %d" % level
 
 # ---- Asteroid Destroyed Signal Handler ----
-func _on_Asteroid_destroyed(size: float):
+func _on_Asteroid_destroyed(size: float, parent_position: Vector2):
     score += 10 * size
-    print("Score updated to:", score)  # Debug statement
     var new_size = size - 1
     if new_size > 0:
-        spawn_smaller_asteroids(new_size)
+        spawn_smaller_asteroids(new_size, parent_position)
 
 # ---- Player Hit Signal Handler ----
 func _on_Player_hit():
@@ -101,12 +96,12 @@ func _on_Player_hit():
         player_instance.respawn()
 
 # ---- Spawn Smaller Asteroids Function ----
-func spawn_smaller_asteroids(new_size: float):
+func spawn_smaller_asteroids(new_size: float, parent_position: Vector2):
     var screen_size = get_viewport().size
     for i in range(2):  # Spawn two smaller asteroids
         var asteroid = AsteroidScene.instantiate()
         asteroids_node.add_child(asteroid)
-        asteroid.position = player_instance.position  # Or choose appropriate position
+        asteroid.position = parent_position  # Set to parent asteroid's position
         asteroid.set_size(new_size)
         
         # Assign random movement direction

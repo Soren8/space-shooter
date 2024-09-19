@@ -1,15 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://b3ds3g8eur80c"]
+[gd_scene load_steps=2 format=3 uid="uid://b3ds3g8eur80c"]
 
 [ext_resource type="Script" path="res://bullet/bullet.gd" id="1_1oiu2"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_i8t62"]
-
 [node name="Bullet" type="Area2D"]
+collision_layer = 2
 script = ExtResource("1_1oiu2")
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 8
-collision_mask = 2
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(-28, -11)
+color = Color(1, 0.756863, 0.454902, 1)
+polygon = PackedVector2Array(28, -1, 26, 5, 26, 21, 30, 21, 30, 5)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("CircleShape2D_i8t62")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(0, 3.1125)
+scale = Vector2(1, 0.8125)
+polygon = PackedVector2Array(0, -18.6, -2, -11.2154, -2, 8.47692, 2, 8.47692, 2, -11.2154)

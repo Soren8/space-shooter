@@ -28,3 +28,9 @@ offset_left = 10.0
 offset_top = 50.0
 offset_right = 50.0
 offset_bottom = 73.0
+
+[node name="GameOverLabel" type="Label" parent="HUD"]
+offset_right = 40.0
+offset_bottom = 23.0
+horizontal_alignment = 1
+vertical_alignment = 1

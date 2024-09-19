@@ -115,22 +115,11 @@ func spawn_smaller_asteroids(new_size: float, parent_position: Vector2):
 # ---- Game Over Handling ----
 func game_over():
     get_tree().paused = true
-    var game_over_label = Label.new()
+    
+    var game_over_label = $HUD/GameOverLabel
     game_over_label.text = "GAME OVER\nFinal Score: %d" % score
+    game_over_label.position = get_viewport().size / 2
+    game_over_label.show()
     
-    # Set alignment properties for Godot 4
-    game_over_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-    game_over_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+    print("Game Over! Final Score: ", score)
     
-    # Position the label at the center of the viewport
-    game_over_label.rect_position = get_viewport().size / 2
-    game_over_label.rect_pivot_offset = game_over_label.rect_size / 2
-    
-    # Customize appearance (optional)
-    # Uncomment and set the correct path to your font if desired
-    # game_over_label.add_font_override("font", load("res://path_to_font.tres"))
-    # game_over_label.set("custom_colors/font_color", Color(1, 0, 0))  # Example: Red font
-    
-    # Add the label to the HUD
-    hud_node.add_child(game_over_label)
-    print("Game Over! Final Score:", score)  # Debug statement

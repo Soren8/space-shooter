@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvnsjnj5qfqqd"]
+
+[ext_resource type="Texture2D" uid="uid://puu6ji6o87fm" path="res://player/player-ship-removebg.png" id="1_6gfop"]
+[ext_resource type="Script" path="res://player/player.gd" id="1_lyuys"]
+
+[node name="Player" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_lyuys")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.240319, 0.240319)
+texture = ExtResource("1_6gfop")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(-30, 60)
+scale = Vector2(0.239878, 0.310082)
+polygon = PackedVector2Array(127.459, -351.746, -113.494, -111.429, 369.407, -112.199)

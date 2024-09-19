@@ -22,6 +22,7 @@ func _ready():
 	$CollisionPolygon2D.disabled = true
 	invincible = true
 	invincible_timer = INVINCIBILITY_TIME
+	add_to_group("Player")
 
 func _process(delta):
 	handle_input(delta)
@@ -50,7 +51,7 @@ func handle_input(delta):
 	# Shooting
 	shoot_timer -= delta
 	if Input.is_action_pressed("ui_select") and shoot_timer <= 0:
-		fire_bullet()  # Renamed function
+		fire_bullet()
 		shoot_timer = SHOOT_COOLDOWN
 
 func move_and_wrap(delta):
@@ -65,7 +66,7 @@ func move_and_wrap(delta):
 	elif position.y < 0:
 		position.y = screen_size.y
 
-func fire_bullet():  # Renamed function
+func fire_bullet():
 	emit_signal("shoot_bullet", position, rotation)
 
 func handle_invincibility(delta):
@@ -85,4 +86,13 @@ func respawn():
 	rotation = 0
 	invincible = true
 	invincible_timer = INVINCIBILITY_TIME
-	$CollisionShape2D.disabled = true
+	$CollisionPolygon2D.disabled = true
+
+# Collision Handling
+func _on_body_entered(body: Node):
+	if body.is_in_group("Asteroid") and not invincible:
+		lives -= 1
+		if lives <= 0:
+			get_parent().game_over()
+		else:
+			respawn()

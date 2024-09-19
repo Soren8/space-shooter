@@ -7,8 +7,8 @@ signal asteroid_destroyed(size)
 signal player_hit()
 
 # Constants for size ranges
-const MIN_SIZE = 0.2
-const MAX_SIZE = 1.0
+const MIN_SIZE = 0.5
+const MAX_SIZE = 5.0
 
 # Base speed (modifiable based on design)
 const BASE_SPEED = 100
@@ -26,6 +26,7 @@ func _ready():
 	add_to_group("Asteroid")
 	connect("area_entered", Callable(self, "_on_body_entered"))
 	initialize_velocity()
+	set_size(randf_range(MIN_SIZE, MAX_SIZE))
 
 # ---- Set Size Function ----
 func set_size(new_size: float):
@@ -66,7 +67,7 @@ func move_and_wrap(delta):
 func _on_body_entered(body):
 	if body.is_in_group("Bullet"):
 		print("Asteroid collided with Bullet:", body)
-		emit_signal("asteroid_destroyed", size)
+		emit_signal("asteroid_destroyed", size, position)
 		body.queue_free()
 		destroy_asteroid()
 	elif body.is_in_group("Player"):

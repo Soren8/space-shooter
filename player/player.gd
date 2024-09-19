@@ -1,8 +1,8 @@
 extends Area2D
 
 # Constants
-const ACCELERATION = 200
-const MAX_SPEED = 300
+const ACCELERATION = 1000
+const MAX_SPEED = 1500
 const ROTATION_SPEED = 5  # degrees per frame
 const FRICTION = 0.98
 const SHOOT_COOLDOWN = 0.25  # seconds

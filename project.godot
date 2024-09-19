@@ -28,6 +28,12 @@ shoot={
 ]
 }
 
+[layer_names]
+
+2d_render/layer_1="Asteroids"
+2d_render/layer_2="Bullets"
+2d_render/layer_3="Player"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

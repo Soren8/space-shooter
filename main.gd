@@ -38,9 +38,10 @@ func _ready():
 func _on_Player_shoot_bullet(position: Vector2, rotation: float):
     print("Bullet emitted from position:", position, "with rotation:", rotation)  # Debug statement
     var bullet = BulletScene.instantiate()
-    bullets_node.add_child(bullet)
     bullet.position = position
     bullet.rotation = rotation
+    bullets_node.add_child(bullet)
+    
     # No need to connect signals here as collisions are handled within Bullet and Asteroid scripts
     print("Bullet instantiated at position:", bullet.position, "with velocity:", bullet.velocity)  # Debug statement
 

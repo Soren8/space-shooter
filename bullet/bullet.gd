@@ -11,6 +11,7 @@ var lifetime = LIFETIME
 func _ready():
 	set_process(true)
 	add_to_group("Bullet")
+	velocity = Vector2.UP.rotated(rotation) * SPEED
 
 func _process(delta):
 	position += velocity * delta

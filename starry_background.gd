@@ -14,19 +14,22 @@ func _ready():
 	for i in star_count:
 		create_star()
 
+	# Set the layer to ensure it is behind other elements
+	layer = -1
+
 func create_star():
 	var star = ColorRect.new()
 	star.color = Color.WHITE
 	
 	var star_size = 2
-	star.rect_size = Vector2(star_size, star_size)
+	star.size = Vector2(star_size, star_size)
 	
 	var pos_x = randf() * get_viewport().size.x
 	var pos_y = randf() * get_viewport().size.y
-	star.rect_position = Vector2(pos_x, pos_y)
+	star.position = Vector2(pos_x, pos_y)
 	
 	var scale = randf_range(0.5, 1.5)
-	star.rect_scale = Vector2(scale, scale)
+	star.scale = Vector2(scale, scale)
 	
 	add_child(star)
 
@@ -36,7 +39,7 @@ func _notification(what):
 
 func update_background_size():
 	if is_instance_valid(background):
-		background.rect_size = get_viewport().size
-		background.rect_position = Vector2.ZERO
+		background.size = get_viewport().size
+		background.position = Vector2.ZERO
 
 # If you want to update or regenerate stars on resize, you would handle it here or in a custom function

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://56iw261d2400"]
+[gd_scene load_steps=3 format=3 uid="uid://56iw261d2400"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_56k8w"]
+[ext_resource type="PackedScene" uid="uid://dio7uf4flqx78" path="res://starry_background.tscn" id="2_gy8r2"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_56k8w")
@@ -34,3 +35,6 @@ offset_right = 40.0
 offset_bottom = 23.0
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="StarryBackground" parent="." instance=ExtResource("2_gy8r2")]
+layer = -1

@@ -10,6 +10,7 @@ var lifetime = LIFETIME
 
 func _ready():
 	set_process(true)
+	add_to_group("Bullet")
 
 func _process(delta):
 	position += velocity * delta
@@ -28,3 +29,10 @@ func wrap_around():
 		position.y = 0
 	elif position.y < 0:
 		position.y = screen_size.y
+
+# Collision Handling
+func _on_body_entered(body: Node):
+	if body.is_in_group("Asteroid"):
+		body.queue_free()
+		get_parent().score += 10 * body.size  # Assuming 'score' is accessible
+		queue_free()

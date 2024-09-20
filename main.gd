@@ -105,11 +105,13 @@ func _on_Player_hit():
 func spawn_smaller_asteroids(new_size: float, parent_position: Vector2):
 	var screen_size = get_viewport().size
 	for i in range(3):
+		print("Spawning small asteroid ", i + 1, " with size ", new_size)  # Debug print
 		asteroids_count += 1
 		var asteroid = AsteroidScene.instantiate()
-		asteroids_node.call_deferred("add_child", asteroid)
+		asteroids_node.add_child(asteroid)  # Removed call_deferred
+		
 		asteroid.position = parent_position  # Set to parent asteroid's position
-		asteroid.call_deferred("set_size", new_size)  # Deferred set_size call
+		asteroid.set_size(new_size)  # Removed call_deferred
 		
 		# Assign random movement direction
 		var angle = randf() * PI * 2
@@ -118,6 +120,7 @@ func spawn_smaller_asteroids(new_size: float, parent_position: Vector2):
 		# Connect asteroid to its signals
 		asteroid.connect("asteroid_destroyed", Callable(self, "_on_Asteroid_destroyed"))
 		asteroid.connect("player_hit", Callable(self, "_on_Player_hit"))
+
 
 # ---- Game Over Handling ----
 func game_over():

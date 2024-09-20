@@ -1,18 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://56iw261d2400"]
+[gd_scene load_steps=6 format=3 uid="uid://56iw261d2400"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_56k8w"]
 [ext_resource type="PackedScene" uid="uid://dio7uf4flqx78" path="res://starry_background.tscn" id="2_gy8r2"]
 [ext_resource type="AudioStream" uid="uid://d0l8y6qxpfik4" path="res://audio/Galactic-Dreams.mp3" id="3_rbg02"]
 [ext_resource type="Script" path="res://AudioStreamPlayer.gd" id="4_eh5vn"]
+[ext_resource type="PackedScene" uid="uid://bfgh3dseajhj8" path="res://pause_menu.tscn" id="5_7v2h2"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_56k8w")
+
+[node name="PauseMenu" parent="." instance=ExtResource("5_7v2h2")]
 
 [node name="Bullets" type="Node2D" parent="."]
 
 [node name="Asteroids" type="Node2D" parent="."]
 
 [node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="PauseLabel" type="Label" parent="HUD"]
+visible = false
+offset_right = 57.0
+offset_bottom = 23.0
+text = "Paused"
 
 [node name="ScoreLabel" type="Label" parent="HUD"]
 offset_left = 10.0

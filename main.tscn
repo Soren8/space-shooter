@@ -36,6 +36,7 @@ offset_right = 50.0
 offset_bottom = 53.0
 
 [node name="LevelLabel" type="Label" parent="HUD"]
+visible = false
 offset_left = 10.0
 offset_top = 50.0
 offset_right = 50.0
@@ -46,6 +47,14 @@ offset_right = 40.0
 offset_bottom = 23.0
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="WinLabel" type="Label" parent="HUD"]
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+text = "YOU WIN!
+Now you're all alone in space and don't even have a pet rock, idiot!"
+horizontal_alignment = 1
 
 [node name="StarryBackground" parent="." instance=ExtResource("2_gy8r2")]
 layer = -1

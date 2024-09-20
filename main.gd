@@ -5,6 +5,7 @@ extends Node2D
 var score: int = 0
 var level: int = 1
 var lives: int = 3
+var asteroids_count = 0
 
 # ---- Preloads ----
 @onready var PlayerScene: PackedScene = preload("res://player/player.tscn")
@@ -32,7 +33,7 @@ func _ready():
 	# Removed: player_instance.connect("body_entered", Callable(self, "_on_Player_body_entered"))
 
 	# Spawn Initial Asteroids
-	spawn_asteroids(10)
+	spawn_asteroids(7)
 
 # ---- Player Shooting Bullet ----
 func _on_Player_shoot_bullet(position: Vector2, rotation: float):
@@ -47,6 +48,7 @@ func _on_Player_shoot_bullet(position: Vector2, rotation: float):
 
 # ---- Spawn Asteroids Function ----
 func spawn_asteroids(num: int):
+	asteroids_count += num
 	var screen_size = get_viewport().size
 	for i in range(num):
 		var asteroid = AsteroidScene.instantiate()
@@ -85,6 +87,10 @@ func _on_Asteroid_destroyed(size: float, parent_position: Vector2):
 	var new_size = size - 1
 	if new_size > 0:
 		spawn_smaller_asteroids(new_size, parent_position)
+	# Check if it was the last asteroid
+	asteroids_count -= 1  # Decrement the count when an asteroid is destroyed
+	if asteroids_count <= 0:
+		win_game()
 
 # ---- Player Hit Signal Handler ----
 func _on_Player_hit():
@@ -99,6 +105,7 @@ func _on_Player_hit():
 func spawn_smaller_asteroids(new_size: float, parent_position: Vector2):
 	var screen_size = get_viewport().size
 	for i in range(3):
+		asteroids_count += 1
 		var asteroid = AsteroidScene.instantiate()
 		asteroids_node.call_deferred("add_child", asteroid)
 		asteroid.position = parent_position  # Set to parent asteroid's position
@@ -122,3 +129,11 @@ func game_over():
 	game_over_label.show()
 	
 	print("Game Over! Final Score: ", score)
+
+func win_game():
+	get_tree().paused = true  # Pause the game
+	var win_label = $HUD/WinLabel
+	var viewport_size = get_viewport().size
+	var label_half_width = win_label.size.x / 2
+	win_label.position = Vector2(viewport_size.x / 2 - label_half_width, viewport_size.y / 2)
+	win_label.show()

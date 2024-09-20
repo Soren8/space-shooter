@@ -127,11 +127,9 @@ func game_over():
 	get_tree().paused = true
 	
 	var game_over_label = $HUD/GameOverLabel
-	game_over_label.text = "GAME OVER\nFinal Score: %d" % score
+	game_over_label.text = "You suck!\nFinal Score: %d" % score
 	game_over_label.position = get_viewport().size / 2
 	game_over_label.show()
-	
-	print("You Suck! Final Score: ", score)
 
 func win_game():
 	get_tree().paused = true  # Pause the game

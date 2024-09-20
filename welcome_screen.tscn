@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://i0cjmrlvp8kh"]
+
+[ext_resource type="Script" path="res://welcome_screen.gd" id="1_eb51b"]
+[ext_resource type="PackedScene" uid="uid://dio7uf4flqx78" path="res://starry_background.tscn" id="2_ipiqa"]
+
+[node name="WelcomeScreen" type="CanvasLayer"]
+script = ExtResource("1_eb51b")
+
+[node name="StarryBackground" parent="." instance=ExtResource("2_ipiqa")]
+
+[node name="GameDescriptionLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Welcome to Asteroids"
+horizontal_alignment = 1
+
+[node name="StartInstructionLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Press any key to start"
+horizontal_alignment = 1

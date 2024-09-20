@@ -131,7 +131,7 @@ func game_over():
 	game_over_label.position = get_viewport().size / 2
 	game_over_label.show()
 	
-	print("Game Over! Final Score: ", score)
+	print("You Suck! Final Score: ", score)
 
 func win_game():
 	get_tree().paused = true  # Pause the game

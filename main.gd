@@ -32,7 +32,7 @@ func _ready():
     # Removed: player_instance.connect("body_entered", Callable(self, "_on_Player_body_entered"))
     
     # Spawn Initial Asteroids
-    spawn_asteroids(5)
+    spawn_asteroids(10)
 
 # ---- Player Shooting Bullet ----
 func _on_Player_shoot_bullet(position: Vector2, rotation: float):
@@ -98,7 +98,7 @@ func _on_Player_hit():
 # ---- Spawn Smaller Asteroids Function ----
 func spawn_smaller_asteroids(new_size: float, parent_position: Vector2):
     var screen_size = get_viewport().size
-    for i in range(2):  # Spawn two smaller asteroids
+    for i in range(3):
         var asteroid = AsteroidScene.instantiate()
         asteroids_node.call_deferred("add_child", asteroid)
         asteroid.position = parent_position  # Set to parent asteroid's position

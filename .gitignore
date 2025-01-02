@@ -3,3 +3,4 @@
 *.tmp
 build/exported/
 build/asteroids.tar
+.aider*
